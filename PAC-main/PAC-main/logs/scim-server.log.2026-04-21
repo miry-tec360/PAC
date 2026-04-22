@@ -1,0 +1,686 @@
+2026-04-21 17:26:47,810 | INFO | ORACLE_CLIENT_INIT | thick_mode=false
+2026-04-21 17:26:47,815 | INFO | PAC_APP_START | host=0.0.0.0 | port=6000 | base_url=http://localhost:6001/scim/v2
+2026-04-21 17:26:48,331 | INFO | ORACLE_CLIENT_INIT | thick_mode=false
+2026-04-21 17:26:48,339 | INFO | PAC_APP_START | host=0.0.0.0 | port=6000 | base_url=http://localhost:6001/scim/v2
+2026-04-21 17:30:46,565 | INFO | REQUEST_IN | request_id=req-1776807046563 | method=GET | path=/scim/v2/ServiceProviderConfig | remote_addr=10.70.255.115 | headers={"Accept": "application/scim+json", "Accept-Charset": "utf-8", "Content-Type": "application/json; charset=utf-8", "User-Agent": "Okta OPP Agent - 3.1.0", "Authorization": "***MASKED***", "Host": "10.70.255.115:6000", "Connection": "Keep-Alive", "Accept-Encoding": "gzip,deflate"} | body=null
+2026-04-21 17:30:46,568 | INFO | RESPONSE_OUT | request_id=req-1776807046563 | status=200 | duration_ms=4.76 | body={
+  "authenticationSchemes": [
+    {
+      "description": "Static bearer token for Okta Provisioning Agent",
+      "name": "OAuth Bearer Token",
+      "primary": true,
+      "specUri": "https://datatracker.ietf.org/doc/html/rfc6750",
+      "type": "oauthbearertoken"
+    }
+  ],
+  "bulk": {
+    "maxOperations": 0,
+    "maxPayloadSize": 0,
+    "supported": false
+  },
+  "changePassword": {
+    "supported": true
+  },
+  "etag": {
+    "supported": false
+  },
+  "filter": {
+    "maxResults": 200,
+    "supported": true
+  },
+  "patch": {
+    "supported": true
+  },
+  "schemas": [
+    "urn:ietf:params:scim:schemas:core:2.0:ServiceProviderConfig"
+  ],
+  "sort": {
+    "supported": false
+  }
+}
+
+2026-04-21 17:30:56,061 | INFO | REQUEST_IN | request_id=req-1776807056061 | method=GET | path=/scim/v2/ServiceProviderConfig | remote_addr=10.70.255.115 | headers={"Accept": "application/scim+json", "Accept-Charset": "utf-8", "Content-Type": "application/json; charset=utf-8", "User-Agent": "Okta OPP Agent - 3.1.0", "Authorization": "***MASKED***", "Host": "10.70.255.115:6000", "Connection": "Keep-Alive", "Accept-Encoding": "gzip,deflate"} | body=null
+2026-04-21 17:30:56,061 | INFO | RESPONSE_OUT | request_id=req-1776807056061 | status=200 | duration_ms=0.35 | body={
+  "authenticationSchemes": [
+    {
+      "description": "Static bearer token for Okta Provisioning Agent",
+      "name": "OAuth Bearer Token",
+      "primary": true,
+      "specUri": "https://datatracker.ietf.org/doc/html/rfc6750",
+      "type": "oauthbearertoken"
+    }
+  ],
+  "bulk": {
+    "maxOperations": 0,
+    "maxPayloadSize": 0,
+    "supported": false
+  },
+  "changePassword": {
+    "supported": true
+  },
+  "etag": {
+    "supported": false
+  },
+  "filter": {
+    "maxResults": 200,
+    "supported": true
+  },
+  "patch": {
+    "supported": true
+  },
+  "schemas": [
+    "urn:ietf:params:scim:schemas:core:2.0:ServiceProviderConfig"
+  ],
+  "sort": {
+    "supported": false
+  }
+}
+
+2026-04-21 17:31:57,379 | INFO | REQUEST_IN | request_id=req-1776807117379 | method=GET | path=/scim/v2/Groups | remote_addr=10.70.255.115 | headers={"Accept": "application/json", "Accept-Charset": "utf-8", "Content-Type": "application/json; charset=utf-8", "User-Agent": "Okta OPP Agent - 3.1.0", "Authorization": "***MASKED***", "Host": "10.70.255.115:6000", "Connection": "Keep-Alive", "Accept-Encoding": "gzip,deflate"} | body=null
+2026-04-21 17:31:57,382 | INFO | RESPONSE_OUT | request_id=req-1776807117379 | status=404 | duration_ms=2.51 | body=<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+2026-04-21 17:33:04,822 | INFO | REQUEST_IN | request_id=req-1776807184822 | method=GET | path=/scim/v2/ServiceProviderConfig | remote_addr=10.70.255.115 | headers={"Accept": "application/scim+json", "Accept-Charset": "utf-8", "Content-Type": "application/json; charset=utf-8", "User-Agent": "Okta OPP Agent - 3.1.0", "Authorization": "***MASKED***", "Host": "10.70.255.115:6000", "Connection": "Keep-Alive", "Accept-Encoding": "gzip,deflate"} | body=null
+2026-04-21 17:33:04,822 | INFO | RESPONSE_OUT | request_id=req-1776807184822 | status=200 | duration_ms=0.48 | body={
+  "authenticationSchemes": [
+    {
+      "description": "Static bearer token for Okta Provisioning Agent",
+      "name": "OAuth Bearer Token",
+      "primary": true,
+      "specUri": "https://datatracker.ietf.org/doc/html/rfc6750",
+      "type": "oauthbearertoken"
+    }
+  ],
+  "bulk": {
+    "maxOperations": 0,
+    "maxPayloadSize": 0,
+    "supported": false
+  },
+  "changePassword": {
+    "supported": true
+  },
+  "etag": {
+    "supported": false
+  },
+  "filter": {
+    "maxResults": 200,
+    "supported": true
+  },
+  "patch": {
+    "supported": true
+  },
+  "schemas": [
+    "urn:ietf:params:scim:schemas:core:2.0:ServiceProviderConfig"
+  ],
+  "sort": {
+    "supported": false
+  }
+}
+
+2026-04-21 17:33:28,876 | INFO | ORACLE_CLIENT_INIT | thick_mode=false
+2026-04-21 17:33:28,886 | INFO | PAC_APP_START | host=0.0.0.0 | port=6000 | base_url=http://localhost:6001/scim/v2
+2026-04-21 17:34:17,423 | INFO | ORACLE_CLIENT_INIT | thick_mode=false
+2026-04-21 17:34:17,432 | INFO | PAC_APP_START | host=0.0.0.0 | port=6000 | base_url=http://localhost:6001/scim/v2
+2026-04-21 17:34:30,091 | INFO | REQUEST_IN | request_id=req-1776807270091 | method=GET | path=/scim/v2/ServiceProviderConfig | remote_addr=10.70.255.115 | headers={"Accept": "application/scim+json", "Accept-Charset": "utf-8", "Content-Type": "application/json; charset=utf-8", "User-Agent": "Okta OPP Agent - 3.1.0", "Authorization": "***MASKED***", "Host": "10.70.255.115:6000", "Connection": "Keep-Alive", "Accept-Encoding": "gzip,deflate"} | body=null
+2026-04-21 17:34:30,092 | INFO | RESPONSE_OUT | request_id=req-1776807270091 | status=200 | duration_ms=0.93 | body={
+  "authenticationSchemes": [
+    {
+      "description": "Static bearer token for Okta Provisioning Agent",
+      "name": "OAuth Bearer Token",
+      "primary": true,
+      "specUri": "https://datatracker.ietf.org/doc/html/rfc6750",
+      "type": "oauthbearertoken"
+    }
+  ],
+  "bulk": {
+    "maxOperations": 0,
+    "maxPayloadSize": 0,
+    "supported": false
+  },
+  "changePassword": {
+    "supported": true
+  },
+  "etag": {
+    "supported": false
+  },
+  "filter": {
+    "maxResults": 200,
+    "supported": true
+  },
+  "patch": {
+    "supported": true
+  },
+  "schemas": [
+    "urn:ietf:params:scim:schemas:core:2.0:ServiceProviderConfig"
+  ],
+  "sort": {
+    "supported": false
+  }
+}
+
+2026-04-21 17:36:20,787 | INFO | ORACLE_CLIENT_INIT | thick_mode=false
+2026-04-21 17:36:20,795 | INFO | PAC_APP_START | host=0.0.0.0 | port=6000 | base_url=http://localhost:6001/scim/v2
+2026-04-21 17:36:53,657 | INFO | ORACLE_CLIENT_INIT | thick_mode=false
+2026-04-21 17:36:53,660 | INFO | PAC_APP_START | host=0.0.0.0 | port=6000 | base_url=http://localhost:6001/scim/v2
+2026-04-21 17:36:53,942 | INFO | ORACLE_CLIENT_INIT | thick_mode=false
+2026-04-21 17:36:53,945 | INFO | PAC_APP_START | host=0.0.0.0 | port=6000 | base_url=http://localhost:6001/scim/v2
+2026-04-21 17:37:13,620 | INFO | REQUEST_IN | request_id=req-1776807433620 | method=GET | path=/scim/v2/Groups | remote_addr=10.70.255.115 | headers={"Accept": "application/scim+json", "Accept-Charset": "utf-8", "Content-Type": "application/json; charset=utf-8", "User-Agent": "Okta OPP Agent - 3.1.0", "Authorization": "***MASKED***", "Host": "10.70.255.115:6000", "Connection": "Keep-Alive", "Accept-Encoding": "gzip,deflate"} | body=null
+2026-04-21 17:37:13,621 | INFO | RESPONSE_OUT | request_id=req-1776807433620 | status=404 | duration_ms=0.77 | body=<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+2026-04-21 17:37:59,329 | INFO | REQUEST_IN | request_id=req-1776807479329 | method=GET | path=/scim/v2/ResourceTypes | remote_addr=10.70.255.115 | headers={"Accept": "application/scim+json", "Accept-Charset": "utf-8", "Content-Type": "application/json; charset=utf-8", "User-Agent": "Okta OPP Agent - 3.1.0", "Authorization": "***MASKED***", "Host": "10.70.255.115:6000", "Connection": "Keep-Alive", "Accept-Encoding": "gzip,deflate"} | body=null
+2026-04-21 17:37:59,330 | INFO | RESPONSE_OUT | request_id=req-1776807479329 | status=200 | duration_ms=0.44 | body={
+  "Resources": [
+    {
+      "description": "PAC users",
+      "endpoint": "/Users",
+      "id": "User",
+      "name": "User",
+      "schema": "urn:ietf:params:scim:schemas:core:2.0:User",
+      "schemaExtensions": [
+        {
+          "required": false,
+          "schema": "urn:okta:sat:1.0:user:custom"
+        }
+      ],
+      "schemas": [
+        "urn:ietf:params:scim:schemas:core:2.0:ResourceType"
+      ]
+    },
+    {
+      "description": "Cat\u00e1logo de roles PAC",
+      "endpoint": "/Roles",
+      "id": "Role",
+      "name": "Role",
+      "schema": "urn:okta:scim:schemas:core:1.0:Role",
+      "schemas": [
+        "urn:ietf:params:scim:schemas:core:2.0:ResourceType"
+      ]
+    }
+  ],
+  "itemsPerPage": 2,
+  "schemas": [
+    "urn:ietf:params:scim:api:messages:2.0:ListResponse"
+  ],
+  "startIndex": 1,
+  "totalResults": 2
+}
+
+2026-04-21 17:37:59,856 | INFO | REQUEST_IN | request_id=req-1776807479856 | method=GET | path=/scim/v2/Schemas | remote_addr=10.70.255.115 | headers={"Accept": "application/scim+json", "Accept-Charset": "utf-8", "Content-Type": "application/json; charset=utf-8", "User-Agent": "Okta OPP Agent - 3.1.0", "Authorization": "***MASKED***", "Host": "10.70.255.115:6000", "Connection": "Keep-Alive", "Accept-Encoding": "gzip,deflate"} | body=null
+2026-04-21 17:37:59,856 | INFO | RESPONSE_OUT | request_id=req-1776807479856 | status=200 | duration_ms=0.57 | body={
+  "Resources": [
+    {
+      "attributes": [
+        {
+          "caseExact": false,
+          "multiValued": false,
+          "mutability": "readWrite",
+          "name": "userName",
+          "required": true,
+          "returned": "always",
+          "type": "string",
+          "uniqueness": "server"
+        },
+        {
+          "caseExact": false,
+          "multiValued": false,
+          "mutability": "readWrite",
+          "name": "externalId",
+          "required": false,
+          "returned": "default",
+          "type": "string",
+          "uniqueness": "none"
+        },
+        {
+          "caseExact": false,
+          "multiValued": false,
+          "mutability": "readWrite",
+          "name": "name",
+          "required": false,
+          "returned": "default",
+          "subAttributes": [
+            {
+              "caseExact": false,
+              "multiValued": false,
+              "mutability": "readWrite",
+              "name": "givenName",
+              "required": false,
+              "returned": "default",
+              "type": "string",
+              "uniqueness": "none"
+            },
+            {
+              "caseExact": false,
+              "multiValued": false,
+              "mutability": "readWrite",
+              "name": "familyName",
+              "required": false,
+              "returned": "default",
+              "type": "string",
+              "uniqueness": "none"
+            }
+          ],
+          "type": "complex",
+          "uniqueness": "none"
+        },
+        {
+          "caseExact": false,
+          "multiValued": true,
+          "mutability": "readWrite",
+          "name": "emails",
+          "required": false,
+          "returned": "default",
+          "subAttributes": [
+            {
+              "caseExact": false,
+              "multiValued": false,
+              "mutability": "readWrite",
+              "name": "value",
+              "required": false,
+              "returned": "default",
+              "type": "string",
+              "uniqueness": "none"
+            },
+            {
+              "caseExact": false,
+              "multiValued": false,
+              "mutability": "readWrite",
+              "name": "type",
+              "required": false,
+              "returned": "default",
+              "type": "string",
+              "uniqueness": "none"
+            },
+            {
+              "caseExact": false,
+              "multiValued": false,
+              "mutability": "readWrite",
+              "name": "primary",
+              "required": false,
+              "returned": "default",
+              "type": "boolean",
+              "uniqueness": "none"
+            }
+          ],
+          "type": "complex",
+          "uniqueness": "none"
+        },
+        {
+          "caseExact": false,
+          "multiValued": false,
+          "mutability": "readWrite",
+          "name": "title",
+          "required": false,
+          "returned": "default",
+          "type": "string",
+          "uniqueness": "none"
+        },
+        {
+          "caseExact": false,
+          "multiValued": false,
+          "mutability": "readWrite",
+          "name": "active",
+          "required": false,
+          "returned": "default",
+          "type": "boolean",
+          "uniqueness": "none"
+        }
+      ],
+      "description": "Core SCIM User",
+      "id": "urn:ietf:params:scim:schemas:core:2.0:User",
+      "meta": {
+        "location": "http://localhost:6001/scim/v2/Schemas/urn:ietf:params:scim:schemas:core:2.0:User",
+        "resourceType": "Schema"
+      },
+      "name": "User",
+      "schemas": [
+        "urn:ietf:params:scim:schemas:core:2.0:Schema"
+      ]
+    },
+    {
+      "attributes": [
+        {
+          "caseExact": false,
+          "multiValued": false,
+          "mutability": "readWrite",
+          "name": "rutSinDv",
+          "required": false,
+          "returned": "default",
+          "type": "string",
+          "uniqueness": "none"
+        },
+        {
+          "caseExact": false,
+          "multiValued": false,
+          "mutability": "readOnly",
+          "name": "dv",
+          "required": false,
+          "returned": "default",
+          "type": "string",
+          "uniqueness": "none"
+        },
+        {
+          "caseExact": false,
+          "multiValued": false,
+          "mutability": "readWrite",
+          "name": "codigoRol",
+          "required": false,
+          "returned": "default",
+          "type": "string",
+          "uniqueness": "none"
+        },
+        {
+          "caseExact": false,
+          "multiValued": false,
+          "mutability": "readOnly",
+          "name": "nombreRol",
+          "required": false,
+          "returned": "default",
+          "type": "string",
+          "uniqueness": "none"
+        },
+        {
+          "caseExact": false,
+          "multiValued": false,
+          "mutability": "readOnly",
+          "name": "login",
+          "required": false,
+          "returned": "default",
+          "type": "string",
+          "uniqueness": "none"
+        },
+        {
+          "caseExact": false,
+          "multiValued": false,
+          "mutability": "readWrite",
+          "name": "userchangepwd",
+          "required": false,
+          "returned": "default",
+          "type": "boolean",
+          "uniqueness": "none"
+        }
+      ],
+      "description": "Custom schema para la plataforma PAC",
+      "id": "urn:okta:sat:1.0:user:custom",
+      "meta": {
+        "location": "http://localhost:6001/scim/v2/Schemas/urn:okta:sat:1.0:user:custom",
+        "resourceType": "Schema"
+      },
+      "name": "PACUserProfile",
+      "schemas": [
+        "urn:ietf:params:scim:schemas:core:2.0:Schema"
+      ]
+    },
+    {
+      "attributes": [
+        {
+          "caseExact": false,
+          "multiValued": false,
+          "mutability": "readOnly",
+          "name": "displayName",
+          "required": true,
+          "returned": "always",
+          "type": "string",
+          "uniqueness": "none"
+        },
+        {
+          "caseExact": false,
+          "multiValued": false,
+          "mutability": "readOnly",
+          "name": "description",
+          "required": false,
+          "returned": "default",
+          "type": "string",
+          "uniqueness": "none"
+        },
+        {
+          "caseExact": false,
+          "multiValued": false,
+          "mutability": "readOnly",
+          "name": "externalId",
+          "required": false,
+          "returned": "default",
+          "type": "string",
+          "uniqueness": "none"
+        }
+      ],
+      "description": "Cat\u00e1logo de roles PAC para importaci\u00f3n en Okta",
+      "id": "urn:okta:scim:schemas:core:1.0:Role",
+      "meta": {
+        "location": "http://localhost:6001/scim/v2/Schemas/urn:okta:scim:schemas:core:1.0:Role",
+        "resourceType": "Schema"
+      },
+      "name": "Role",
+      "schemas": [
+        "urn:ietf:params:scim:schemas:core:2.0:Schema"
+      ]
+    }
+  ],
+  "itemsPerPage": 3,
+  "schemas": [
+    "urn:ietf:params:scim:api:messages:2.0:ListResponse"
+  ],
+  "startIndex": 1,
+  "totalResults": 3
+}
+
+2026-04-21 17:38:00,395 | INFO | REQUEST_IN | request_id=req-1776807480395 | method=GET | path=/scim/v2/ResourceTypes | remote_addr=10.70.255.115 | headers={"Accept": "application/scim+json", "Accept-Charset": "utf-8", "Content-Type": "application/json; charset=utf-8", "User-Agent": "Okta OPP Agent - 3.1.0", "Authorization": "***MASKED***", "Host": "10.70.255.115:6000", "Connection": "Keep-Alive", "Accept-Encoding": "gzip,deflate"} | body=null
+2026-04-21 17:38:00,396 | INFO | RESPONSE_OUT | request_id=req-1776807480395 | status=200 | duration_ms=0.83 | body={
+  "Resources": [
+    {
+      "description": "PAC users",
+      "endpoint": "/Users",
+      "id": "User",
+      "name": "User",
+      "schema": "urn:ietf:params:scim:schemas:core:2.0:User",
+      "schemaExtensions": [
+        {
+          "required": false,
+          "schema": "urn:okta:sat:1.0:user:custom"
+        }
+      ],
+      "schemas": [
+        "urn:ietf:params:scim:schemas:core:2.0:ResourceType"
+      ]
+    },
+    {
+      "description": "Cat\u00e1logo de roles PAC",
+      "endpoint": "/Roles",
+      "id": "Role",
+      "name": "Role",
+      "schema": "urn:okta:scim:schemas:core:1.0:Role",
+      "schemas": [
+        "urn:ietf:params:scim:schemas:core:2.0:ResourceType"
+      ]
+    }
+  ],
+  "itemsPerPage": 2,
+  "schemas": [
+    "urn:ietf:params:scim:api:messages:2.0:ListResponse"
+  ],
+  "startIndex": 1,
+  "totalResults": 2
+}
+
+2026-04-21 17:38:48,464 | INFO | REQUEST_IN | request_id=req-1776807528463 | method=GET | path=/scim/v2/Groups | remote_addr=10.70.255.115 | headers={"Accept": "application/scim+json", "Accept-Charset": "utf-8", "Content-Type": "application/json; charset=utf-8", "User-Agent": "Okta OPP Agent - 3.1.0", "Authorization": "***MASKED***", "Host": "10.70.255.115:6000", "Connection": "Keep-Alive", "Accept-Encoding": "gzip,deflate"} | body=null
+2026-04-21 17:38:48,464 | INFO | RESPONSE_OUT | request_id=req-1776807528463 | status=404 | duration_ms=0.7 | body=<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+2026-04-21 17:41:23,173 | INFO | ORACLE_CLIENT_INIT | thick_mode=false
+2026-04-21 17:41:23,177 | INFO | PAC_APP_START | host=0.0.0.0 | port=6000 | base_url=http://localhost:6000/scim/v2
+2026-04-21 17:41:23,449 | INFO | ORACLE_CLIENT_INIT | thick_mode=false
+2026-04-21 17:41:23,453 | INFO | PAC_APP_START | host=0.0.0.0 | port=6000 | base_url=http://localhost:6000/scim/v2
+2026-04-21 17:41:39,621 | INFO | REQUEST_IN | request_id=req-1776807699621 | method=GET | path=/scim/v2/Groups | remote_addr=10.70.255.115 | headers={"Accept": "application/scim+json", "Accept-Charset": "utf-8", "Content-Type": "application/json; charset=utf-8", "User-Agent": "Okta OPP Agent - 3.1.0", "Authorization": "***MASKED***", "Host": "10.70.255.115:6000", "Connection": "Keep-Alive", "Accept-Encoding": "gzip,deflate"} | body=null
+2026-04-21 17:41:39,621 | INFO | RESPONSE_OUT | request_id=req-1776807699621 | status=404 | duration_ms=0.54 | body=<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+2026-04-21 17:44:18,217 | INFO | ORACLE_CLIENT_INIT | thick_mode=false
+2026-04-21 17:44:18,221 | INFO | PAC_APP_START | host=0.0.0.0 | port=6000 | base_url=http://10.70.255.115:6000/scim/v2
+2026-04-21 17:44:18,560 | INFO | ORACLE_CLIENT_INIT | thick_mode=false
+2026-04-21 17:44:18,565 | INFO | PAC_APP_START | host=0.0.0.0 | port=6000 | base_url=http://10.70.255.115:6000/scim/v2
+2026-04-21 17:44:31,891 | INFO | REQUEST_IN | request_id=req-1776807871891 | method=GET | path=/scim/v2/Groups | remote_addr=10.70.255.115 | headers={"Accept": "application/scim+json", "Accept-Charset": "utf-8", "Content-Type": "application/json; charset=utf-8", "User-Agent": "Okta OPP Agent - 3.1.0", "Authorization": "***MASKED***", "Host": "10.70.255.115:6000", "Connection": "Keep-Alive", "Accept-Encoding": "gzip,deflate"} | body=null
+2026-04-21 17:44:31,891 | INFO | RESPONSE_OUT | request_id=req-1776807871891 | status=404 | duration_ms=0.5 | body=<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+2026-04-21 17:46:11,598 | INFO | ORACLE_CLIENT_INIT | thick_mode=false
+2026-04-21 17:46:11,604 | INFO | PAC_APP_START | host=0.0.0.0 | port=6000 | base_url=http://10.70.255.115:6000/scim/v2
+2026-04-21 17:46:11,787 | INFO | ORACLE_CLIENT_INIT | thick_mode=false
+2026-04-21 17:46:11,790 | INFO | PAC_APP_START | host=0.0.0.0 | port=6000 | base_url=http://10.70.255.115:6000/scim/v2
+2026-04-21 17:46:19,030 | INFO | REQUEST_IN | request_id=req-1776807979030 | method=GET | path=/scim/v2/ResourceTypes | remote_addr=10.70.255.115 | headers={"Accept": "application/scim+json", "Accept-Charset": "utf-8", "Content-Type": "application/json; charset=utf-8", "User-Agent": "Okta OPP Agent - 3.1.0", "Authorization": "***MASKED***", "Host": "10.70.255.115:6000", "Connection": "Keep-Alive", "Accept-Encoding": "gzip,deflate"} | body=null
+2026-04-21 17:46:19,030 | INFO | RESPONSE_OUT | request_id=req-1776807979030 | status=200 | duration_ms=0.47 | body={
+  "Resources": [
+    {
+      "description": "PAC users",
+      "endpoint": "/Users",
+      "id": "User",
+      "name": "User",
+      "schema": "urn:ietf:params:scim:schemas:core:2.0:User",
+      "schemaExtensions": [
+        {
+          "required": false,
+          "schema": "urn:okta:sat:1.0:user:custom"
+        }
+      ],
+      "schemas": [
+        "urn:ietf:params:scim:schemas:core:2.0:ResourceType"
+      ]
+    },
+    {
+      "description": "Cat\u00e1logo de roles PAC",
+      "endpoint": "/Roles",
+      "id": "Role",
+      "name": "Role",
+      "schema": "urn:okta:scim:schemas:core:1.0:Role",
+      "schemas": [
+        "urn:ietf:params:scim:schemas:core:2.0:ResourceType"
+      ]
+    }
+  ],
+  "itemsPerPage": 2,
+  "schemas": [
+    "urn:ietf:params:scim:api:messages:2.0:ListResponse"
+  ],
+  "startIndex": 1,
+  "totalResults": 2
+}
+
+2026-04-21 17:46:24,641 | INFO | REQUEST_IN | request_id=req-1776807984641 | method=GET | path=/scim/v2/Groups | remote_addr=10.70.255.115 | headers={"Accept": "application/scim+json", "Accept-Charset": "utf-8", "Content-Type": "application/json; charset=utf-8", "User-Agent": "Okta OPP Agent - 3.1.0", "Authorization": "***MASKED***", "Host": "10.70.255.115:6000", "Connection": "Keep-Alive", "Accept-Encoding": "gzip,deflate"} | body=null
+2026-04-21 17:46:24,641 | INFO | RESPONSE_OUT | request_id=req-1776807984641 | status=404 | duration_ms=0.38 | body=<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+2026-04-21 17:49:36,589 | INFO | ORACLE_CLIENT_INIT | thick_mode=false
+2026-04-21 17:49:36,594 | INFO | PAC_APP_START | host=0.0.0.0 | port=6000 | base_url=http://10.70.255.115:6000/scim/v2
+2026-04-21 17:49:36,802 | INFO | ORACLE_CLIENT_INIT | thick_mode=false
+2026-04-21 17:49:36,807 | INFO | PAC_APP_START | host=0.0.0.0 | port=6000 | base_url=http://10.70.255.115:6000/scim/v2
+2026-04-21 17:50:07,177 | INFO | REQUEST_IN | request_id=req-1776808207177 | method=GET | path=/scim/v2/Groups | remote_addr=10.70.255.115 | headers={"Accept": "application/scim+json", "Accept-Charset": "utf-8", "Content-Type": "application/json; charset=utf-8", "User-Agent": "Okta OPP Agent - 3.1.0", "Authorization": "***MASKED***", "Host": "10.70.255.115:6000", "Connection": "Keep-Alive", "Accept-Encoding": "gzip,deflate"} | body=null
+2026-04-21 17:50:07,177 | INFO | RESPONSE_OUT | request_id=req-1776808207177 | status=404 | duration_ms=0.5 | body=<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+2026-04-21 17:57:04,422 | INFO | ORACLE_CLIENT_INIT | thick_mode=false
+2026-04-21 17:57:04,425 | INFO | PAC_APP_START | host=0.0.0.0 | port=6000 | base_url=http://10.70.255.115:6000/scim/v2
+2026-04-21 17:57:04,644 | INFO | ORACLE_CLIENT_INIT | thick_mode=false
+2026-04-21 17:57:04,646 | INFO | PAC_APP_START | host=0.0.0.0 | port=6000 | base_url=http://10.70.255.115:6000/scim/v2
+2026-04-21 17:57:23,455 | INFO | REQUEST_IN | request_id=req-1776808643455 | method=GET | path=/scim/v2/ResourceTypes | remote_addr=10.70.255.115 | headers={"Accept": "application/scim+json", "Accept-Charset": "utf-8", "Content-Type": "application/json; charset=utf-8", "User-Agent": "Okta OPP Agent - 3.1.0", "Authorization": "***MASKED***", "Host": "10.70.255.115:6000", "Connection": "Keep-Alive", "Accept-Encoding": "gzip,deflate"} | body=null
+2026-04-21 17:57:23,458 | INFO | RESPONSE_OUT | request_id=req-1776808643455 | status=200 | duration_ms=3.1 | body={
+  "Resources": [
+    {
+      "description": "PAC users",
+      "endpoint": "/Users",
+      "id": "User",
+      "name": "User",
+      "schema": "urn:ietf:params:scim:schemas:core:2.0:User",
+      "schemaExtensions": [
+        {
+          "required": false,
+          "schema": "urn:okta:sat:1.0:user:custom"
+        }
+      ],
+      "schemas": [
+        "urn:ietf:params:scim:schemas:core:2.0:ResourceType"
+      ]
+    },
+    {
+      "description": "Cat\u00e1logo de roles PAC",
+      "endpoint": "/Roles",
+      "id": "Role",
+      "name": "Role",
+      "schema": "urn:okta:scim:schemas:core:1.0:Role",
+      "schemas": [
+        "urn:ietf:params:scim:schemas:core:2.0:ResourceType"
+      ]
+    }
+  ],
+  "itemsPerPage": 2,
+  "schemas": [
+    "urn:ietf:params:scim:api:messages:2.0:ListResponse"
+  ],
+  "startIndex": 1,
+  "totalResults": 2
+}
+
+2026-04-21 17:57:38,007 | INFO | REQUEST_IN | request_id=req-1776808658006 | method=GET | path=/scim/v2/Groups | remote_addr=10.70.255.115 | headers={"Accept": "application/scim+json", "Accept-Charset": "utf-8", "Content-Type": "application/json; charset=utf-8", "User-Agent": "Okta OPP Agent - 3.1.0", "Authorization": "***MASKED***", "Host": "10.70.255.115:6000", "Connection": "Keep-Alive", "Accept-Encoding": "gzip,deflate"} | body=null
+2026-04-21 17:57:38,007 | INFO | RESPONSE_OUT | request_id=req-1776808658006 | status=404 | duration_ms=0.5 | body=<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+2026-04-21 18:05:27,215 | INFO | REQUEST_IN | request_id=req-1776809127214 | method=GET | path=/scim/v2/ResourceTypes | remote_addr=10.70.255.115 | headers={"Accept": "application/scim+json", "Accept-Charset": "utf-8", "Content-Type": "application/json; charset=utf-8", "User-Agent": "Okta OPP Agent - 3.1.0", "Authorization": "***MASKED***", "Host": "10.70.255.115:6000", "Connection": "Keep-Alive", "Accept-Encoding": "gzip,deflate"} | body=null
+2026-04-21 18:05:27,215 | INFO | RESPONSE_OUT | request_id=req-1776809127214 | status=200 | duration_ms=0.95 | body={
+  "Resources": [
+    {
+      "description": "PAC users",
+      "endpoint": "/Users",
+      "id": "User",
+      "name": "User",
+      "schema": "urn:ietf:params:scim:schemas:core:2.0:User",
+      "schemaExtensions": [
+        {
+          "required": false,
+          "schema": "urn:okta:sat:1.0:user:custom"
+        }
+      ],
+      "schemas": [
+        "urn:ietf:params:scim:schemas:core:2.0:ResourceType"
+      ]
+    },
+    {
+      "description": "Cat\u00e1logo de roles PAC",
+      "endpoint": "/Roles",
+      "id": "Role",
+      "name": "Role",
+      "schema": "urn:okta:scim:schemas:core:1.0:Role",
+      "schemas": [
+        "urn:ietf:params:scim:schemas:core:2.0:ResourceType"
+      ]
+    }
+  ],
+  "itemsPerPage": 2,
+  "schemas": [
+    "urn:ietf:params:scim:api:messages:2.0:ListResponse"
+  ],
+  "startIndex": 1,
+  "totalResults": 2
+}
+
