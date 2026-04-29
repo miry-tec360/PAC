@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import random
 from typing import Optional, Union, Any, Dict, List, Tuple
 
 import oracledb
@@ -18,6 +19,26 @@ class PacOracleRepo:
             LOGGER.info("ORACLE_CLIENT_INIT | thick_mode=true | lib_dir=%s", Config.ORACLE_CLIENT_LIB_DIR)
         else:
             LOGGER.info("ORACLE_CLIENT_INIT | thick_mode=false")
+
+    # Contraseñas genericas disponibles para usuarios nuevos
+    _PASSWORD_POOL = [
+        "oNQnP7E2v3OZs+xUoiJugQ==",   # R2FdDWgVnt
+        "73utdAnS4saVkrvVk+W3Tw==",   # XF7WjKXEzU
+        "UL7eBlchW/WxN2erH4i4Tw==",   # AU79WgrJ9E
+        "0ZEf3ViB8xiJs+niqAjS6w==",   # rNqWUxha79
+        "CM8vUPgNA9MC9WY5WpmZ9A==",   # tvR5yNXEKY
+        "++qoOIKx9spFb9mMmqTIMw==",   # bCv4nTwdvc
+        "TU5JzCyv41rVoJvkTy9jYw==",   # DZg54jRNtA
+        "Z5/ag8LeZVDdVFykfSGtEQ==",   # uAjxtRQkz5
+        "tnTy5MToR+18sBeYFttnew==",   # ubE2J97Fc5
+        "ts2QwJpwwnnWHvzrxMxSHA==",   # T9g4PJw9E7
+        "uBshpgwm73H6ADDdIIy//Q==",   # Ka5MsBJ2BC
+    ]
+
+    @classmethod
+    def _random_password(cls) -> str:
+        """Retorna un hash de password generico aleatorio del pool disponible."""
+        return random.choice(cls._PASSWORD_POOL)
 
     @property
     def table(self) -> str:
@@ -303,7 +324,7 @@ class PacOracleRepo:
                     "c_suc": Config.PAC_DEFAULT_SUC,
                     "nombre": nombre,
                     "login": login,
-                    "a_pass_usr": Config.PAC_DEFAULT_PASSWORD_HASH,
+                    "a_pass_usr": self._random_password(),
                     "email": email,
                 }
                 self._log_sql(sql, binds)
