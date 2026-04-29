@@ -171,23 +171,63 @@ class PacOracleRepo:
         return [self._build_scim_user_model(r) for r in rows], total
 
     def _next_c_usr(self, cur) -> int:
-        # Usar sequence si existe en producción:
-        # cur.execute("SELECT PACCLPR.SEQ_PAC_USUARIO.NEXTVAL FROM DUAL")
-        cur.execute(f"SELECT NVL(MAX(C_USR), 0) + 1 AS NEXT_C_USR FROM {self.table}")
+        # Intentar con secuencia de produccion primero
+        # Si no existe, usar MAX(C_USR)+1 como fallback
+        try:
+            cur.execute(f"SELECT {Config.PAC_SCHEMA_OWNER}.SEQ_PAC_USUARIO.NEXTVAL FROM DUAL")
+        except Exception:
+            cur.execute(f"SELECT NVL(MAX(C_USR), 0) + 1 AS NEXT_C_USR FROM {self.table}")
         return int(cur.fetchone()[0])
 
     def upsert_user(self, data: Dict[str, Any]) -> Dict[str, Any]:
         custom = data.get("custom") or {}
-        rut_raw = str(custom.get("rutSinDv") or data.get("userName") or "").strip()
-        dv_raw = str(custom.get("dv") or "").strip()
+        rut_raw = str(custom.get("rutSinDv") or "").strip()
+        dv_raw  = str(custom.get("dv") or "").strip()
+        # userName puede venir como login completo (ej: "981291409") o como RUT con DV (ej: "98129140-9")
+        username_raw = str(data.get("userName") or "").strip()
 
-        # Construir login (RUT+DV sin guion) que es el identificador en PAC
         if rut_raw and dv_raw:
-            login = f"{rut_raw}{dv_raw}"
-            rut_sin_dv, dv = rut_raw, dv_raw.upper()
-        else:
-            rut_sin_dv, dv = validate_rut_dv(rut_raw)
+            # Custom schema trae rut y dv separados - caso ideal
+            rut_sin_dv = rut_raw
+            dv = dv_raw.upper()
             login = f"{rut_sin_dv}{dv}"
+        elif username_raw:
+            import re as _re
+            # Si contiene guion → formatear como RUT con DV (ej: "20905343-8" o "9765432-K")
+            if "-" in username_raw:
+                rut_sin_dv, dv = validate_rut_dv(username_raw)
+                login = f"{rut_sin_dv}{dv}"
+            # Si termina en K → login completo con DV alfabetico (ej: "9765432K")
+            elif username_raw.upper().endswith("K"):
+                login = username_raw.upper()
+                rut_sin_dv = login[:-1]
+                dv = "K"
+            # Solo digitos → puede ser login completo o RUT sin DV
+            elif username_raw.isdigit():
+                # Verificar si el ultimo digito es el DV correcto
+                rut_candidate = username_raw[:-1]
+                dv_candidate = username_raw[-1]
+                import sys as _sys
+                _sys.path.insert(0, "/mnt/user-data/uploads")
+                try:
+                    from pac_utils import _calc_dv as _cdv
+                    if _cdv(rut_candidate) == dv_candidate:
+                        # Ultimo digito es DV correcto → es login completo
+                        login = username_raw
+                        rut_sin_dv = rut_candidate
+                        dv = dv_candidate
+                    else:
+                        # No es DV correcto → es RUT sin DV, calcular
+                        rut_sin_dv, dv = validate_rut_dv(username_raw)
+                        login = f"{rut_sin_dv}{dv}"
+                except Exception:
+                    rut_sin_dv, dv = validate_rut_dv(username_raw)
+                    login = f"{rut_sin_dv}{dv}"
+            else:
+                rut_sin_dv, dv = validate_rut_dv(username_raw)
+                login = f"{rut_sin_dv}{dv}"
+        else:
+            raise ValueError("Se requiere userName o rutSinDv para identificar el usuario PAC.")
 
         nombre = build_nombre_usr(data.get("firstName"), data.get("lastName"))
         email = str(data.get("email") or custom.get("email") or "").strip()
@@ -217,7 +257,7 @@ class PacOracleRepo:
                         A_EMAIL_USR  = :email,
                         C_ROL        = :c_rol,
                         C_EST        = :c_est,
-                        D_MODIF_USR  = TO_DATE(SYSDATE, 'YYYY-MM-DD HH24:MI:SS')
+                        D_MODIF_USR  = SYSDATE
                     WHERE C_USR       = :c_usr
                       AND A_LOGIN_USR = :login
                 """
@@ -247,8 +287,8 @@ class PacOracleRepo:
                         :c_pais, :c_est, :c_corr_cod, :c_suc,
                         :nombre, '1', 0,
                         :login, :a_pass_usr,
-                        TO_DATE(SYSDATE, 'YYYY-MM-DD HH24:MI:SS'),
-                        TO_DATE(SYSDATE, 'YYYY-MM-DD HH24:MI:SS'),
+                        SYSDATE,
+                        SYSDATE,
                         :email, 0, 'Creacion', 0
                     )
                 """
@@ -285,7 +325,7 @@ class PacOracleRepo:
             sql = f"""
                 UPDATE {self.table}
                 SET C_EST       = 0,
-                    D_MODIF_USR = TO_DATE(SYSDATE, 'YYYY-MM-DD HH24:MI:SS')
+                    D_MODIF_USR = SYSDATE
                 WHERE C_USR       = :c_usr
                   AND A_LOGIN_USR = :login
             """
@@ -300,7 +340,7 @@ class PacOracleRepo:
             sql = f"""
                 UPDATE {self.table}
                 SET A_PASS_USR  = :pass_usr,
-                    D_MODIF_USR = TO_DATE(SYSDATE, 'YYYY-MM-DD HH24:MI:SS')
+                    D_MODIF_USR = SYSDATE
                 WHERE C_USR = :c_usr
                   AND C_EST = 1
             """

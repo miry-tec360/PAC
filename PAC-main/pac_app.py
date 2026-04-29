@@ -74,9 +74,38 @@ def _extract_primary_role(payload: Dict[str, Any]) -> str:
     return str(selected.get("value") or "").strip()
 
 
+def _derive_names(payload: Dict[str, Any]):
+    """
+    Deriva firstName y lastName priorizando name.formatted sobre givenName/familyName.
+    Resuelve el caso donde Okta envia el nombre actualizado en formatted
+    pero givenName/familyName aun tienen el valor cacheado anterior.
+    """
+    name = payload.get("name") or {}
+    formatted = str(name.get("formatted") or "").strip()
+    given     = str(name.get("givenName")  or "").strip()
+    family    = str(name.get("familyName") or "").strip()
+    # Strip adicional para limpiar padding CHAR de Oracle que puede venir en familyName
+    family    = family.strip()
+
+    if formatted:
+        combined = f"{given} {family}".strip()
+        if formatted != combined:
+            # Usar familyName limpio para lastName, derivar firstName desde formatted
+            if family and formatted.upper().endswith(family.upper()):
+                first = formatted[:-len(family)].strip()
+                return first.upper(), family.upper()
+            # Sin familyName o no termina en familyName: split simple
+            parts = formatted.split(" ", 1)
+            return parts[0].upper(), (parts[1].upper() if len(parts) > 1 else parts[0].upper())
+
+    # formatted igual a givenName+familyName -> usar givenName/familyName directamente
+    first = given or (formatted.split(" ", 1)[0] if formatted else "")
+    last  = family or (formatted.split(" ", 1)[1] if formatted and " " in formatted else first)
+    return first.upper(), last.upper()
+
+
 def _extract_payload(payload: Dict[str, Any]) -> Dict[str, Any]:
     extension = payload.get(Config.CUSTOM_SCHEMA) or {}
-    name = payload.get("name") or {}
     emails = payload.get("emails") or []
     email = next((e["value"] for e in emails if e.get("primary")), "")
     if not email and emails:
@@ -87,14 +116,19 @@ def _extract_payload(payload: Dict[str, Any]) -> Dict[str, Any]:
     role_from_schema = str(extension.get("codigoRol") or "").strip()
     codigo_rol = role_from_roles or role_from_schema
 
+    first_name, last_name = _derive_names(payload)
+
     data = {
         "userName": str(payload.get("userName") or "").strip(),
         "externalId": str(payload.get("externalId") or "").strip(),
-        "firstName": str(name.get("givenName") or "").strip(),
-        "lastName": str(name.get("familyName") or "").strip(),
+        "firstName": first_name,
+        "lastName": last_name,
         "title": str(payload.get("title") or "").strip(),
         "email": email,
-        "active": bool(payload.get("active", True)),
+        # PAC: SUSPEND en Okta envia active=false via PUT/PATCH
+        # Segun spec del cliente, SUSPEND = ENABLED en PAC (no desactivar)
+        # Solo se desactiva via DELETE (DEACTIVATED/DELETED en Okta)
+        "active": True,
         "custom": {
             "rutSinDv": str(extension.get("rutSinDv") or "").strip(),
             "dv": str(extension.get("dv") or "").strip(),
@@ -246,16 +280,127 @@ def get_user(user_id: str):
     return jsonify(user_to_scim(user, Config.BASE_URL))
 
 
+def _pac_nombre_completo(data: Dict[str, Any]) -> str:
+    first = str(data.get("firstName") or "").strip()
+    last  = str(data.get("lastName")  or "").strip()
+    return f"{first} {last}".strip() or "SIN NOMBRE"
+
+
+def _pac_split_apellidos(data: Dict[str, Any]):
+    """Separa apellido1 y apellido2 desde lastName para mostrar en logs."""
+    last = str(data.get("lastName") or "").strip()
+    if " " in last:
+        partes = last.split(" ", 1)
+        return partes[0].strip(), partes[1].strip()
+    return last, ""
+
+
+def _pac_rol_display(data: Dict[str, Any]) -> str:
+    custom = data.get("custom") or {}
+    codigo = str(custom.get("codigoRol") or "").strip()
+    from pac_config import Config as _C
+    rol_info = _C.PAC_ROLES.get(int(codigo)) if codigo.isdigit() else None
+    nombre = rol_info["name"] if rol_info else ""
+    return f"{codigo} - {nombre}" if nombre else codigo or "SIN ROL"
+
+
+def _pac_estado_display(data: Dict[str, Any]) -> str:
+    return "ACTIVO" if data.get("active", True) else "INACTIVO"
+
+
+def _pac_log_exito_alta(data: Dict[str, Any]) -> None:
+    from datetime import datetime
+    usuario = str(data.get("userName") or "").strip()
+    nombre  = _pac_nombre_completo(data)
+    apell1, apell2 = _pac_split_apellidos(data)
+    rol     = _pac_rol_display(data)
+    estado  = _pac_estado_display(data)
+    fecha   = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    msg = (
+        "\n========================================"
+        "\nALTA DE USUARIO - EXITOSO"
+        "\n========================================"
+        "\nUsuario    : " + usuario +
+        "\nNombre     : " + nombre +
+        "\nApellido 1 : " + apell1 +
+        "\nApellido 2 : " + apell2 +
+        "\nRol        : " + rol +
+        "\nEstado     : " + estado +
+        "\nFecha      : " + fecha +
+        "\n========================================"
+    )
+    LOGGER.info(msg)
+
+
+def _pac_log_exito_actualizacion(data: Dict[str, Any], usuario_id: str) -> None:
+    from datetime import datetime
+    nombre  = _pac_nombre_completo(data)
+    apell1, apell2 = _pac_split_apellidos(data)
+    rol     = _pac_rol_display(data)
+    estado  = _pac_estado_display(data)
+    fecha   = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    msg = (
+        "\n========================================"
+        "\nACTUALIZACION DE USUARIO - EXITOSO"
+        "\n========================================"
+        "\nUsuario    : " + usuario_id +
+        "\nNombre     : " + nombre +
+        "\nApellido 1 : " + apell1 +
+        "\nApellido 2 : " + apell2 +
+        "\nRol        : " + rol +
+        "\nEstado     : " + estado +
+        "\nFecha      : " + fecha +
+        "\n========================================"
+    )
+    LOGGER.info(msg)
+
+
+def _pac_log_exito_baja(usuario_id: str, nombre: str) -> None:
+    from datetime import datetime
+    fecha = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    msg = (
+        "\n========================================"
+        "\nBAJA DE USUARIO - EXITOSO"
+        "\n========================================"
+        "\nUsuario    : " + usuario_id +
+        "\nNombre     : " + nombre +
+        "\nEstado     : INACTIVO"
+        "\nFecha      : " + fecha +
+        "\n========================================"
+    )
+    LOGGER.info(msg)
+
+
+def _pac_log_error(operacion: str, usuario_id: str, motivo: str, accion: str) -> None:
+    from datetime import datetime
+    fecha = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    msg = (
+        "\n========================================"
+        "\nERROR - " + operacion + " FALLIDO"
+        "\n========================================"
+        "\nUsuario    : " + usuario_id +
+        "\nMotivo     : " + motivo +
+        "\nAccion     : " + accion +
+        "\nFecha      : " + fecha +
+        "\n========================================"
+    )
+    LOGGER.error(msg)
+
+
 @app.post("/scim/v2/Users")
 def create_user():
     payload = request.get_json(force=True, silent=False) or {}
     data = _extract_payload(payload)
+    usuario = str(data.get("userName") or "").strip()
     try:
         user = repo.upsert_user(data)
+        _pac_log_exito_alta(data)
         return jsonify(user_to_scim(user, Config.BASE_URL)), 201
     except ValueError as exc:
+        _pac_log_error("ALTA", usuario, str(exc), "Verificar los datos del usuario en Okta antes de reasignar")
         return _error(str(exc), 400)
     except Exception as exc:
+        _pac_log_error("ALTA", usuario, f"Error inesperado: {str(exc)}", "Revisar logs tecnicos y contactar al administrador")
         LOGGER.exception("USER_CREATE_ERROR")
         return _error(str(exc), 500)
 
@@ -267,22 +412,70 @@ def replace_user(user_id: str):
     data["userName"] = data.get("userName") or user_id
     try:
         user = repo.upsert_user(data)
+        _pac_log_exito_actualizacion(data, user_id)
         return jsonify(user_to_scim(user, Config.BASE_URL))
     except ValueError as exc:
+        _pac_log_error("ACTUALIZACION", user_id, str(exc), "Verificar los datos del usuario en Okta y reintentar")
         return _error(str(exc), 400)
     except Exception as exc:
+        _pac_log_error("ACTUALIZACION", user_id, f"Error inesperado: {str(exc)}", "Revisar logs tecnicos y contactar al administrador")
         LOGGER.exception("USER_REPLACE_ERROR")
+        return _error(str(exc), 500)
+
+
+@app.patch("/scim/v2/Users/<user_id>")
+def patch_user(user_id: str):
+    # Okta envia PATCH con active=false para SUSPEND
+    # Segun spec PAC: SUSPEND = ENABLED, se ignora el cambio de estado
+    payload = request.get_json(force=True, silent=False) or {}
+    operations = payload.get("Operations") or []
+
+    # Verificar si es solo un cambio de active (suspension)
+    only_active_change = all(
+        op.get("path") == "active" or
+        (op.get("op") == "replace" and list(op.get("value", {}).keys()) == ["active"])
+        for op in operations
+    )
+
+    existing = repo.get_user(user_id)
+    if not existing:
+        _pac_log_error("ACTUALIZACION", user_id, "Usuario no encontrado en PAC", "Verificar que el usuario exista en la BD antes de actualizar")
+        return _error("User not found", 404)
+
+    if only_active_change:
+        # Ignorar suspension - retornar el usuario sin cambios
+        LOGGER.info("PATCH ignorado para usuario %s - suspension no aplica en PAC (usuario se mantiene ACTIVO)", user_id)
+        return jsonify(user_to_scim(existing, Config.BASE_URL))
+
+    # Para otros cambios via PATCH, aplicar normalmente
+    try:
+        data = _extract_payload(payload)
+        data["userName"] = data.get("userName") or existing.get("userName") or user_id
+        user = repo.upsert_user(data)
+        _pac_log_exito_actualizacion(data, user_id)
+        return jsonify(user_to_scim(user, Config.BASE_URL))
+    except ValueError as exc:
+        _pac_log_error("ACTUALIZACION", user_id, str(exc), "Verificar los datos del usuario en Okta y reintentar")
+        return _error(str(exc), 400)
+    except Exception as exc:
+        _pac_log_error("ACTUALIZACION", user_id, f"Error inesperado: {str(exc)}", "Revisar logs tecnicos y contactar al administrador")
+        LOGGER.exception("USER_PATCH_ERROR")
         return _error(str(exc), 500)
 
 
 @app.delete("/scim/v2/Users/<user_id>")
 def delete_user(user_id: str):
     try:
+        existing = repo.get_user(user_id)
+        nombre = _pac_nombre_completo(existing) if existing else "SIN NOMBRE"
         repo.deactivate_user(user_id)
+        _pac_log_exito_baja(user_id, nombre)
         return "", 204
     except ValueError as exc:
+        _pac_log_error("BAJA", user_id, str(exc), "Verificar que el usuario exista en la BD antes de dar de baja")
         return _error(str(exc), 404)
     except Exception as exc:
+        _pac_log_error("BAJA", user_id, f"Error inesperado: {str(exc)}", "Revisar logs tecnicos y contactar al administrador")
         LOGGER.exception("USER_DELETE_ERROR")
         return _error(str(exc), 500)
 
